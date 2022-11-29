@@ -123,33 +123,37 @@ Correcting validation split errors generally selects a slightly better model, wh
 
 *[Cut down version of Table 4 goes here]*
 
-
 *Takeaway: Cleaning the validation split can slightly improve performance via better model selection.*
-
 
 ## New challenges in LNL {#sec-lnl}
 
-New capabilities provided by the advent of modern deep learning allows us to attack new challenges.
+Most research into learning with noisy labels is conducted using simple artificial noise, as few datasets exist which contain real and known label errors.
+But simple artificial noise is no longer challenging; recent LNL analyses study conditions where up to 80% of labels are noised [@song2022survey].
+New capabilities provided by the advent of modern deep learning allows us to attack more challenging problems in LNL.
 
-### Realistic noise is not the same as artificial noise
+### Artificial noise behaves very differently to real and human-originated noise
 
-Not easy to detect even artificial noise before, because models were not good.
+We find that the characteristics of artificial noise are very different to those of real noise, as verified using annotators on Mechanical Turk.
+Simultaneously, we show that human-originated noise is much more similar to real noise.
 
-Most research into learning with noisy labels is done using simple artificial noise (cite).
-Labels are randomly flipped without considering the context of the input text. The problem with this is that real label errors are almost always a function of the input text [@plank2014linguistically]. But this is hard to investigate because it is difficult to generate realistic label errors.
+[Two loss diagrams go here]
 
-We developed a method for noising labels using human error, which we call human originated noising.
+Fundamentally, loss is high and models are robust because simple artificial noise permutes labels with no consideration for input text. This means they carry no erroneous features that models can learn.
+By comparison, real label errors are almost always related to input text [@plank2014linguistically].
 
-(Diagram)
+We believe human-originated noising may enable future advancements across multiple areas of LNL, supporting new tasks and metrics in areas such as the cost of human reannotation, estimation of dataset error, and mitigation of bias.
 
-*Takeaways: Be cautious when extrapolating from LNL results which only used simple artificial noise.*
+*Takeaways: Be cautious when extrapolating from LNL findings which only used simple artificial noise. (Encourage creation of more challenging and realistic LNL benchmarks)*
 
-### Evaluation errors can be more harmful than training errors
+### Evaluating with noisy labels is as challenging as learning with noisy labels
 
-Very limited work done in this area.
-Not possible to study noise in test before, because synthetic noise doesn't confuse the model.
+As noise in evaluation splits can affect reported model performance as much as noise in training data,
+further study of model performance given noise in validation and test data seems essential. 
 
-*Takeaway: Be careful when using noisy evaluation splits.*
+Both clean and noisy performance on evaluation data provide useful insight into models’ overall performance.
+Very limited work done in this area: not possible to study noise in test before, because synthetic noise doesn't confuse the model.
+
+*Takeaway: (ENL).*
 
 ## Conclusions and future work
 
@@ -162,7 +166,6 @@ Our Mechanical Turk evaluation data is available [here](https://github-tbd).
 ## Acknowledgments {.appendix}
 
 Placeholder section
-
 
 
 ## References
