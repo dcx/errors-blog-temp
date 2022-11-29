@@ -1,0 +1,132 @@
+---
+title: "Working with Label Errors in NLP"
+subtitle: "Subtitle / quick summary goes here"
+author: 
+    - name: "Derek Chong*"
+      email: "derekch@stanford.edu"
+      affiliations:
+        - name: "Stanford University"
+    - name: "Jenny Hong*"
+      email: "jyunhong@cs.stanford.edu"
+      affiliations:
+        - name: "Stanford University"
+    - name: "Christopher D. Manning"
+      email: "manning@cs.stanford.edu"
+      affiliations:
+        - name: "Stanford University"
+
+doi: "Not Yet Assigned"
+
+date: 2022-11-30
+
+toc: true
+toc-location: left
+toc-title: "Contents"
+number-sections: false
+highlight-style: pygments
+title-block-banner: true # "#4E4E91"
+format: 
+    html:
+        code-fold: true
+
+bibliography: references.bib
+
+citation:
+  type: article-journal
+  title: "Detecting Label Errors by using Pre-Trained Language Models"
+  container-title: "Proceedings of the 2022 conference on empirical methods in natural language processing"
+  doi: "pending"
+  url: https://arxiv.org/abs/2205.12702
+---
+
+[* Equal contribution.]{.aside}
+
+A label error is a mistake in assigning a label to an item within a dataset. Label errors exist in virtually all datasets, and can be introduced by a variety of sources, including human annotators, automatic labeling systems, and data collection processes. They can be difficult to detect, and result in poor model performance. 
+[Estimates of error prevalence vary between 1% and 20% [@redman1998impact; @abedjan2016detecting].]{.aside}
+
+In our paper, "[Detecting Label Errors by using Pre-Trained Language Models](https://arxiv.org/abs/2205.12702)", to be published at the 2022 Conference on Empirical Methods in Natural Language Processing ([EMNLP 2022](https://2022.emnlp.org/)), we show that label errors have much larger effects on model performance than previously believed. We then present a simple method for detecting label errors that can be used to improve performance of NLP models.
+
+In this blog post, we provide a summary of our key findings about label errors that may be of value when applying machine learning in the fields of NLP. We then discuss more general implications for LNL (Learning with Noisy Labels).
+
+::: {.column-page}
+| Dataset | Input Text | Labeled | Actually |
+|-|--------|-|-|
+| IMDB | The ending made my heart jump up into my throat. I proceeded to leave the movie theater a little jittery. After all, it was nearly midnight. [The movie was better than I expected]{style="color: green;"}. I don’t know why it didn’t last very long in the theaters or make as much money as anticipated. [Definitely would recommend]{style="color: green;"}. | [Negative]{style="color: red;"} | [Positive]{style="color: green;"} |
+: Examples of label errors in popular NLP datasets {#tbl-errors}
+:::
+
+## Label errors can be detected using model loss
+
+It is [known empirically](https://twitter.com/karpathy/status/1311884485676294151) that sorting by loss tends to surface unusual data points. We find that doing so while using a fine-tuned pre-trained language models surfaces label errors for re-evaluation at a high rate.
+
+![Some description goes here](perf@2x.png){#fig-perf}
+
+This significantly outperforms recent a state-of-the-art technique which does not use a pre-trained language model.
+
+*Takeaway: Sorting evaluation split results by loss and manually checking a few items is a quick and easy data quality health check.*
+
+
+## Models are not very robust to label errors
+
+Deep learning is believed to be robust to massive amounts of label noise: able to learn even with 100 noisy items to 1 clean item [@rolnick2017deep].
+However, this was only measured using simple artificial noise (see @sec-lnl).
+
+We find that under realistic conditions, models very quickly become inaccurate as the amount of label noise increases.
+
+(Diagram goes here)
+
+*Takeaway: If your dataset is noisy, cleaning your data may significantly improve performance.*
+
+## Errors in evaluation splits further harm performance
+
+Robustness is irrelevant to noise in evaluation splits, which are used for measurement purposes.
+
+### Test split errors damage measurable performance
+
+*Takeaway: Cleaning the test split improves measurable performance by 1-2% in almost all datasets.*
+
+### Validation split errors cause poor model selection
+
+*Takeaway: Cleaning the validation split slightly improves performance.*
+
+
+## New challenges in LNL {#sec-lnl}
+
+New capabilities provided by the advent of modern deep learning allows us to attack new challenges.
+
+### Realistic noise is not the same as artificial noise
+
+Not easy to detect even artificial noise before, because models were not good.
+
+Most research into learning with noisy labels is done using simple artificial noise (cite).
+Labels are randomly flipped without considering the context of the input text. The problem with this is that real label errors are almost always a function of the input text [@plank2014linguistically]. But this is hard to investigate because it is difficult to generate realistic label errors.
+
+We developed a method for noising labels using human error, which we call human originated noising.
+
+(Diagram)
+
+*Takeaways: Be cautious when extrapolating from LNL results which only used simple artificial noise.*
+
+### Evaluation errors can be more harmful than training errors
+
+Very limited work done in this area.
+Not possible to study noise in test before, because synthetic noise doesn't confuse the model.
+
+*Takeaway: Be careful when using noisy evaluation splits.*
+
+## Conclusions and future work
+
+For practitioners: Data quality is important.
+Link to data-centric AI, etc.
+
+We invite LNL researchers to try out our [label noising library](https://github-tbd), and help to build a benchmark of realistic label errors.
+Our Mechanical Turk evaluation data is available [here](https://github-tbd).
+
+## Acknowledgments {.appendix}
+
+Placeholder section
+
+
+
+## References
+
