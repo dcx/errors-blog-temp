@@ -121,7 +121,19 @@ Validation splits are used to select the best model from a set of candidate mode
 Our experiments show that label errors in validation splits can damage final performance by selecting of a model that performs best on noisy validation data, but not on real data.
 Correcting validation split errors generally selects a slightly better model, which results in a small improvement in final test performance, but does not fully correct the problem. 
 
-*[Cut down version of Table 4 goes here]*
+::: {.column-body-outset}
+| Eval.  | Test Perf. | I-5  | A-5  | T-5  | T-M  |
+|-       |-           |-     |-     |-     |-     |
+| Noisy  | Measurable | 90.1 | 88.3 | 89.3 | 89.3 |
+| Noisy  | True       | 94.2 | 91.0 | 92.8 | 82.0 |
+| Noisy  | Rank       | 10   | 1    | 3    | 10   |
+| Corr.  | Measurable | [95.1]{style="color: green;"} | [90.7]{style="color: green;"} | [92.9]{style="color: green;"} | [88.5]{style="color: green;"} |
+| Corr.  | True       | [95.1]{style="color: green;"} | [90.8]{style="color: red;"}  | [93.0]{style="color: green;"}  | 82.0 |
+| Corr.  | Rank       | [4]{style="color: green;"}    | [5]{style="color: red;"}     | [2]{style="color: green;"}     | [8]{style="color: green;"}    |
+| Clean  | True       | 95.8 | 91.0 | 93.8 | 82.1 |
+: End-to-end effects of label noise on task performance, as evaluated on noisy, corrected, and clean validation and test data splits. True accuracy is measured on clean test sets, and measurable accuracy on noisy or corrected test sets. Rank is a relative measure of true accuracy; lower numerical ranks have higher accuracy. Corrections which improve or reduce performance metrics are highlighted in green or red, respectively. Metrics are evaluated on models trained on noisy data. {#tbl-cleanval-gain}
+:::
+
 
 *Takeaway: Cleaning the validation split can slightly improve performance via better model selection.*
 
