@@ -11,7 +11,7 @@
 <meta name="author" content="Christopher D. Manning">
 <meta name="dcterms.date" content="2022-11-30">
 
-<title>Working with Label Errors in Natural Language Datasets</title>
+<title>Working with Label Errors in NLP</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -91,7 +91,7 @@ div.csl-indent {
 <header id="title-block-header" class="quarto-title-block default toc-left page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">Working with Label Errors in Natural Language Datasets</h1>
+      <h1 class="title">Working with Label Errors in NLP</h1>
             <p class="subtitle lead">Summarizing new findings related to the detection and impact of label errors in natural language datasets.</p>
                       </div>
   </div>
@@ -183,10 +183,9 @@ div.csl-indent {
 
 
 <div class="page-columns page-full"><p></p><div class="no-row-height column-margin column-container"><span class="">* Equal contribution.</span></div></div>
-<p>Test</p>
 <div class="page-columns page-full"><p>A label error is a mistake in assigning a label to an item within a dataset. Label errors exist in virtually all datasets, and can be introduced by a variety of sources, including human annotators, automatic labeling systems, and data collection processes. They can be difficult to detect, and result in poor model performance. </p><div class="no-row-height column-margin column-container"><span class="">Estimates of error prevalence vary between 1% and 20% <span class="citation" data-cites="redman1998impact abedjan2016detecting">(<a href="#ref-redman1998impact" role="doc-biblioref">Redman 1998</a>; <a href="#ref-abedjan2016detecting" role="doc-biblioref">Abedjan et al. 2016</a>)</span>.</span></div></div>
-<p>In our paper, “<a href="https://arxiv.org/abs/2205.12702">Detecting Label Errors by using Pre-Trained Language Models</a>”, to be published at the 2022 Conference on Empirical Methods in Natural Language Processing (<a href="https://2022.emnlp.org/">EMNLP 2022</a>), we present a simple method for detecting label errors that can be used to improve performance in many natural language tasks. We also show that label errors have a much greater impact on model performance than previously believed.</p>
-<p>In this blog post, we share a practical summary of our key findings about label errors that may be helpful when working with noisy natural language datasets. We then discuss more general implications for research into LNL (Learning with Noisy Labels).</p>
+<p>In our paper, “<a href="https://arxiv.org/abs/2205.12702">Detecting Label Errors by using Pre-Trained Language Models</a>”, to be published at the 2022 Conference on Empirical Methods in Natural Language Processing (<a href="https://2022.emnlp.org/">EMNLP 2022</a>), we show that label errors have much larger effects on model performance than previously believed. We then present a simple method for detecting label errors that can be used to improve performance in many NLP applications.</p>
+<p>In this blog post, we provide a summary of our key findings about label errors that may be of value when applying machine learning for NLP. We then discuss more general implications for LNL (Learning with Noisy Labels).</p>
 <div class="column-page">
 <div id="tbl-errors" class="anchored">
 <table class="table">
@@ -371,9 +370,11 @@ div.csl-indent {
 </section>
 <section id="evaluating-with-noisy-labels-is-as-challenging-as-learning-with-noisy-labels" class="level3">
 <h3 class="anchored" data-anchor-id="evaluating-with-noisy-labels-is-as-challenging-as-learning-with-noisy-labels">Evaluating with noisy labels is as challenging as learning with noisy labels</h3>
-<p>As noise in evaluation splits can affect reported model performance as much as noise in training data, further study of model performance given noise in validation and test data seems essential.</p>
-<p>Both clean and noisy performance on evaluation data provide useful insight into models’ overall performance. Very limited work done in this area: not possible to study noise in test before, because synthetic noise doesn’t confuse the model.</p>
-<p><em>Takeaway: (ENL).</em></p>
+<p>Validation label errors can affect reported model performance as much as training label errors. Therefore, when measuring model performance in the presence of label noise, you should use an <em>end-to-end</em> evaluation.</p>
+<p>Measure performance on <em>both</em> noisy and clean test data, to provide an estimate of how much performance might change as a result of label noise.</p>
+<p>When using validation data for model selection, take into account the fact that the validation data should also have label errors, and that robustness should be measured with respect not only to training, but also to validation data.</p>
+<p>Very limited work done in this area: not possible to study noise in test before, because synthetic noise doesn’t confuse the model.</p>
+<p><em>Takeaway: Learning with Noisy Labels has been an active area of research. We can deepen our understanding by Evaluating with Noisy Labels.</em></p>
 </section>
 </section>
 <section id="conclusions-and-future-work" class="level2">
