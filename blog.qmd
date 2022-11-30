@@ -65,20 +65,20 @@ We demonstrate that the loss of a fine-tuned pre-trained language model is stron
 
 Simply evaluating a small percentage of items in descending order of loss identifies a large proportion of label errors with high precision, and more effectively than both non-pre-trained baselines, and a more complex state-of-the-art error detection framework.
 
-*Takeaway: Checking high loss data points can be useful as a quick and easy data quality health check, or for more rigorous data cleansing.*
+*Takeaway: Checking high loss data points on a large, pre-trained language model can be useful as a quick and easy data quality health check, or for more rigorous data cleansing.*
 
 
 ## Models are far less robust to label errors than previously believed
 
 Deep learning is thought to be robust to massive amounts of label noise. 
 Models have been shown to achieve high accuracy in datasets with as many as 100 noisy items for each clean item [@rolnick2017deep], and research into learning with noisy labels focuses on label noise in the range of 20-80%.
-However, the majority of studies only use simple artificial noise, in which labels are randomly flipped with no regard to the input text.
+However, the majority of studies only uses simple artificial noise, in which labels are randomly flipped with no regard to the input text.
 
 We revisit the question of model robustness using a new form of realistic, human-originated label noise, which takes advantage of latent human error that exists within crowdsourced datasets. 
 
 ![Human-originated label errors have relationships with input text. On this part of speech task example from TweetNLP, two crowd annotators have confused *"advice"* (noun) with *"advise"* (verb). Human-originated noise would simulate a label error by applying the label *verb* instead of the label *noun*, whereas existing methods for simulating noise may select an unrealistic error such as *adjective*.](img/holn@2x.png){#fig-holn}
 
-In contrast to previous findings, we show that performance very quickly decreases as the amount of label noise increases.
+In contrast to previous findings, we show that performance very quickly decreases as the amount of realistic label noise increases.
 Models learn to reproduce patterns of human error from training data with as little as 5-15% label noise. 
 
 ::: {.column-body-outset}
@@ -118,7 +118,7 @@ We also show that using pre-trained language models to highlight likely errors f
 ### Validation split errors cause poor model selection
 
 Validation splits are used to select the best model from a set of candidate models, such as might be produced by a hyperparameter search process.
-Our experiments show that label errors in validation splits can damage final performance by selecting of a model that performs best on noisy validation data, but not on real data.
+Our experiments show that label errors in validation splits can damage final performance by selecting a model that performs best on noisy validation data, but not on real data.
 Correcting validation split errors generally selects a slightly better model, which results in a small improvement in final test performance, but does not fully correct the problem. 
 
 ::: {.column-body-outset}
@@ -137,9 +137,9 @@ Correcting validation split errors generally selects a slightly better model, wh
 
 *Takeaway: Cleaning the validation split can slightly improve performance via better model selection.*
 
-## New challenges in LNL {#sec-lnl}
+## New challenges in Learning with Noisy Labels {#sec-lnl}
 
-Most research into learning with noisy labels is conducted using simple artificial noise, as few datasets exist which contain real and known label errors.
+Most research into Learning with Noisy Labels is conducted using simple artificial noise, as few datasets exist which contain real and known label errors.
 But simple artificial noise is no longer challenging; recent LNL analyses study conditions where up to 80% of labels are noised [@song2022survey].
 New capabilities provided by the advent of modern deep learning allows us to attack more challenging problems in LNL.
 
@@ -150,7 +150,7 @@ Simultaneously, we show that human-originated noise is much more similar to real
 
 [Two loss diagrams go here]
 
-Fundamentally, loss is high and models are robust because simple artificial noise permutes labels with no consideration for input text. This means they carry no erroneous features that models can learn.
+When there is simple artificial noise, loss is high and models are robust because simple artificial noise permutes labels with no consideration for input text. This means they carry no erroneous features that models can learn.
 By comparison, real label errors are almost always related to input text [@plank2014linguistically].
 
 We believe human-originated noising may enable future advancements across multiple areas of LNL, supporting new tasks and metrics in areas such as the cost of human reannotation, estimation of dataset error, and mitigation of bias.
