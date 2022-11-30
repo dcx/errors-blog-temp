@@ -1,6 +1,6 @@
 ---
 title: "Working with Label Errors in NLP"
-subtitle: "Subtitle / quick summary goes here"
+subtitle: "Summarizing new findings related to the detection and impact of label errors in natural language datasets."
 author: 
     - name: "Derek Chong*"
       email: "derekch@stanford.edu"
